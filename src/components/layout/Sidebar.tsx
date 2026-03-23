@@ -31,7 +31,7 @@ export default function DrillDownSidebar() {
       <div className="sidebar-logo">
         <div className="logo-mark"><span>A</span></div>
         <div className="logo-text">
-          <p className="logo-company">ACEM</p>
+          <p className="logo-company">ACME</p>
           <p className="logo-tagline">Company</p>
         </div>
         <button className="mobile-close" onClick={() => setSidebarOpen(false)} aria-label="Close sidebar">

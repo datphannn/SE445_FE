@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { AuthProvider } from '@/lib/hooks/useAuth';
 
 export const metadata: Metadata = {
-  title: 'ACEM HR Dashboard',
-  description: 'HR Management Dashboard for ACEM Company',
+  title: 'ACME HR Dashboard',
+  description: 'HR Management Dashboard for ACME Company',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -15,7 +16,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <AuthProvider>
+          {children}
+        </AuthProvider>
+      </body>
     </html>
   );
 }

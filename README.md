@@ -1,26 +1,27 @@
-# Sprint 2 — Changed Files Only
+# Sprint 6 — Login/Register + ACEM → ACME
 
-Chỉ copy 3 file này vào project Sprint 1 của bạn, giữ nguyên toàn bộ file khác.
-
-## Files thay đổi
+## Files thay đổi / thêm mới
 
 ```
 src/
-├── components/
-│   ├── layout/
-│   │   └── Sidebar.tsx          ← Sidebar mới: drill-down + dept stats + animation
-│   └── shared/
-│       └── EmployeeTable.tsx    ← Table mới: stat cards + expand row + drawer + pagination
-└── lib/
-    └── data/
-        └── mockData.ts          ← Thêm 4 nhân viên (009-012) + getDeptStats() helper
+├── app/
+│   ├── layout.tsx               ← Thêm AuthProvider wrap + đổi ACME title
+│   ├── page.tsx                 ← Thêm AuthGuard (redirect /login nếu chưa đăng nhập)
+│   ├── login/
+│   │   └── page.tsx             ← MỚI: Trang đăng nhập
+│   └── register/
+│       └── page.tsx             ← MỚI: Trang đăng ký
+├── lib/hooks/
+│   ├── useAuth.tsx              ← MỚI: Auth context (login/register/logout)
+│   └── useDashboard.tsx         ← Fix localStorage key: acem → acme
+└── components/layout/
+    ├── TopNav.tsx               ← ACME + user avatar + logout dropdown
+    └── Sidebar.tsx              ← ACEM → ACME
 ```
 
+## Demo accounts
+- admin@acme.com / admin123
+- hr@acme.com / hr123
+
 ## Cách dùng
-
-1. Giữ nguyên toàn bộ file từ Sprint 1
-2. Copy đè 3 file này vào đúng đường dẫn tương ứng
-3. Chạy lại: `npm run dev`
-
-## Không cần cài thêm package nào
-Tất cả dependencies đã có từ Sprint 1 (lucide-react, recharts, framer-motion).
+Copy đè các file trên, npm run dev

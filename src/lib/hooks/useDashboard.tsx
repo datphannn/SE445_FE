@@ -47,7 +47,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
 
   // Persist dark mode in localStorage
   useEffect(() => {
-    const saved = localStorage.getItem('acem-dark-mode');
+    const saved = localStorage.getItem('acme-dark-mode');
     if (saved === 'true') {
       setIsDark(true);
       document.documentElement.classList.add('dark');
@@ -59,10 +59,10 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       const next = !prev;
       if (next) {
         document.documentElement.classList.add('dark');
-        localStorage.setItem('acem-dark-mode', 'true');
+        localStorage.setItem('acme-dark-mode', 'true');
       } else {
         document.documentElement.classList.remove('dark');
-        localStorage.setItem('acem-dark-mode', 'false');
+        localStorage.setItem('acme-dark-mode', 'false');
       }
       return next;
     });
