@@ -25,3 +25,5 @@ src/
 
 ## Cách dùng
 Copy đè các file trên, npm run dev
+
+## Improve: pnpm
