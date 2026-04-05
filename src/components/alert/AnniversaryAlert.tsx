@@ -2,7 +2,6 @@
 import { useState, useMemo } from 'react';
 import { Cake, Settings, ChevronUp, ChevronDown } from 'lucide-react';
 import { useDashboard } from '@/lib/hooks/useDashboard';
-import { departments } from '@/lib/data/mockData';
 
 function getDaysToAnniversary(hireDate: string): { days: number; nextDate: Date; years: number } {
   const today = new Date();
@@ -25,7 +24,7 @@ function urgencyColor(days: number, threshold: number): { bg: string; text: stri
 }
 
 export default function AnniversaryAlert() {
-  const { allEmployees, alertConfig, setAlertConfig } = useDashboard();
+  const { allEmployees, alertConfig, setAlertConfig, departments } = useDashboard();
   const [showConfig, setShowConfig] = useState(false);
   const [threshold, setThreshold] = useState(alertConfig.anniversaryDaysThreshold);
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc');

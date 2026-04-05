@@ -5,7 +5,7 @@ import {
   ResponsiveContainer, PieChart, Pie, Cell, Legend
 } from 'recharts';
 import { useDashboard } from '@/lib/hooks/useDashboard';
-import { getAverageBenefit, departments } from '@/lib/data/mockData';
+import { getAverageBenefit } from '@/lib/utils/employeeUtils';
 import FilterBar, { FilterState, defaultFilter } from './FilterBar';
 import { useFilteredEmployees } from '@/lib/hooks/useFilteredEmployees';
 
@@ -42,7 +42,7 @@ function PieTooltip({ active, payload }: { active?: boolean; payload?: { name: s
 }
 
 export default function BenefitsPanel() {
-  const { filteredEmployees } = useDashboard();
+  const { filteredEmployees, departments } = useDashboard();
   const [filter, setFilter] = useState<FilterState>(defaultFilter);
 
   const employees = useFilteredEmployees(filteredEmployees, filter);

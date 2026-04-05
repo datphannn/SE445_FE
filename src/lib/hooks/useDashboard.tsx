@@ -1,7 +1,8 @@
 'use client';
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Employee, Department, AlertConfig } from '../types/employee';
-import { employees as allEmployees, departments as allDepartments, getEmployeesByDepartment } from '../data/mockData';
+import { getEmployees } from '@/services/Employee.service';
+import { getDepartments } from '@/services/Department.service';
 
 type ActiveView = 'employees' | 'summary' | 'alert';
 type SummaryTab = 'earnings' | 'vacation' | 'benefits';
@@ -13,6 +14,7 @@ interface DashboardContextType {
   departments: Department[];
   filteredEmployees: Employee[];
   allEmployees: Employee[];
+
 
   activeView: ActiveView;
   setActiveView: (v: ActiveView) => void;
@@ -45,6 +47,14 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const [isDark, setIsDark] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  const [allEmployees, setAllEmployees] = useState<Employee[]>([]);
+  const [departments, setDepartments] = useState<Department[]>([]);
+
+  useEffect(() => {
+    getDepartments().then(setDepartments).catch(console.error);
+    getEmployees().then(setAllEmployees).catch(console.error);
+  }, []);
+
   // Persist dark mode in localStorage
   useEffect(() => {
     const saved = localStorage.getItem('acme-dark-mode');
@@ -68,12 +78,14 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     });
   };
 
-  const filteredEmployees = getEmployeesByDepartment(selectedDepartmentId);
+  const filteredEmployees = selectedDepartmentId
+    ? allEmployees.filter(e => e.departmentId === selectedDepartmentId)
+    : allEmployees;
 
   return (
     <DashboardContext.Provider value={{
       selectedDepartmentId, setSelectedDepartmentId,
-      departments: allDepartments,
+      departments,
       filteredEmployees, allEmployees,
       activeView, setActiveView,
       summaryTab, setSummaryTab,

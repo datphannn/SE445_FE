@@ -4,9 +4,9 @@ import { Bell, BarChart3, Moon, Sun, Menu, LogOut, ChevronDown } from 'lucide-re
 import { useRouter } from 'next/navigation';
 import { useDashboard } from '@/lib/hooks/useDashboard';
 import { useAuth } from '@/lib/hooks/useAuth';
-import { employees } from '@/lib/data/mockData';
+import { Employee } from '@/lib/types/employee';
 
-function getAlertCount(alertConfig: { anniversaryDaysThreshold: number; vacationDaysThreshold: number }) {
+function getAlertCount(alertConfig: { anniversaryDaysThreshold: number; vacationDaysThreshold: number }, employees: Employee[]) {
   const today = new Date();
   const currentMonth = today.getMonth();
   let count = 0;
@@ -37,10 +37,11 @@ export default function TopNav() {
     alertConfig,
     isDark, toggleDark,
     setSidebarOpen, sidebarOpen,
+    allEmployees,
   } = useDashboard();
 
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const alertCount = getAlertCount(alertConfig);
+  const alertCount = getAlertCount(alertConfig, allEmployees);
   const selectedDept = departments.find(d => d.id === selectedDepartmentId);
 
   const handleLogout = () => {

@@ -2,7 +2,6 @@
 import { useState, useMemo } from 'react';
 import { UmbrellaOff, Settings, ChevronUp, ChevronDown } from 'lucide-react';
 import { useDashboard } from '@/lib/hooks/useDashboard';
-import { departments } from '@/lib/data/mockData';
 
 const CURRENT_YEAR = 2025;
 
@@ -15,7 +14,7 @@ function severityInfo(accumulated: number, threshold: number): { bg: string; tex
 }
 
 export default function VacationCapAlert() {
-  const { allEmployees, alertConfig, setAlertConfig } = useDashboard();
+  const { allEmployees, alertConfig, setAlertConfig, departments } = useDashboard();
   const [showConfig, setShowConfig] = useState(false);
   const [threshold, setThreshold] = useState(alertConfig.vacationDaysThreshold);
   const [sortKey, setSortKey] = useState<'accumulated' | 'name'>('accumulated');

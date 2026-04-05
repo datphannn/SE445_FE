@@ -2,7 +2,6 @@
 import { useMemo, useState } from 'react';
 import { PartyPopper, Download } from 'lucide-react';
 import { useDashboard } from '@/lib/hooks/useDashboard';
-import { departments } from '@/lib/data/mockData';
 
 const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 const CONFETTI_COLORS = ['#2563eb','#7c3aed','#ec4899','#f59e0b','#10b981','#ef4444'];
@@ -24,7 +23,7 @@ function daysUntilBirthday(birthDate: string): number {
 }
 
 export default function BirthdayAlert() {
-  const { allEmployees } = useDashboard();
+  const { allEmployees, departments } = useDashboard();
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth()); // 0-indexed
 
   const birthdaysByMonth = useMemo(() => {

@@ -2,10 +2,10 @@
 import { useMemo } from 'react';
 import { RefreshCw, TrendingUp, TrendingDown } from 'lucide-react';
 import { useDashboard } from '@/lib/hooks/useDashboard';
-import { getAverageBenefit, departments } from '@/lib/data/mockData';
+import { getAverageBenefit } from '@/lib/utils/employeeUtils';
 
 export default function BenefitsChangeAlert() {
-  const { allEmployees } = useDashboard();
+  const { allEmployees, departments } = useDashboard();
 
   const alerts = useMemo(() => {
     const results: {

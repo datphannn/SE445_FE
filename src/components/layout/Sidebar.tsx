@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { ChevronRight, Building2, LayoutGrid, TrendingUp, Star, X } from 'lucide-react';
 import { useDashboard } from '@/lib/hooks/useDashboard';
-import { getDeptStats, DeptStats } from '@/lib/data/mockData';
+import { getDeptStats, DeptStats } from '@/lib/utils/employeeUtils';
 
 const DEPT_ICONS: Record<string, string> = {
   sales: '📊', marketing: '📣', hr: '👥',
@@ -13,9 +13,9 @@ export default function DrillDownSidebar() {
   const [isExpanded, setIsExpanded] = useState(true);
   const [hoveredDept, setHoveredDept] = useState<string | null>(null);
   const [deptStats, setDeptStats] = useState<DeptStats[]>([]);
-  const { departments, selectedDepartmentId, setSelectedDepartmentId, setActiveView, allEmployees, sidebarOpen, setSidebarOpen } = useDashboard();
+  const { selectedDepartmentId, setSelectedDepartmentId, setActiveView, allEmployees, departments, sidebarOpen, setSidebarOpen } = useDashboard();
 
-  useEffect(() => { setDeptStats(getDeptStats()); }, []);
+  useEffect(() => { setDeptStats(getDeptStats(departments, allEmployees)); }, [departments, allEmployees]);
 
   const handleSelectDept = (id: string | null) => {
     setSelectedDepartmentId(id);
@@ -91,7 +91,7 @@ export default function DrillDownSidebar() {
                   <div className="dept-content">
                     <div className="dept-main">
                       <span className="dept-icon">{DEPT_ICONS[dept.id] || '🏢'}</span>
-                      <span className="dept-name">{dept.name.replace(' Department', '')}</span>
+                      <span className="dept-name">{dept.name?.replace(' Department', '')}</span>
                       {stats && <span className="dept-count">{stats.headCount}</span>}
                     </div>
                     {stats && (isActive || isHovered) && (

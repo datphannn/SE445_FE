@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 import { useDashboard } from '@/lib/hooks/useDashboard';
 import { Employee } from '@/lib/types/employee';
-import { getTotalEarnings, getTotalVacationDays, getAverageBenefit, departments } from '@/lib/data/mockData';
+import { getTotalEarnings, getTotalVacationDays, getAverageBenefit } from '@/lib/utils/employeeUtils';
 
 const CURRENT_YEAR = 2025;
 const PAGE_SIZE = 8;
@@ -51,6 +51,7 @@ function StatCard({ icon, label, value, sub, color }: {
 
 // ─── Employee Detail Drawer ────────────────────────────────────
 function EmployeeDrawer({ emp, onClose }: { emp: EnrichedEmployee; onClose: () => void }) {
+  const { departments } = useDashboard();
   const dept = departments.find(d => d.id === emp.departmentId);
   const hireDate = new Date(emp.hireDate);
   const birthDate = new Date(emp.birthDate);
@@ -250,7 +251,7 @@ function InfoRow({ icon, label, value }: { icon: React.ReactNode; label: string;
 
 // ─── Main Table ────────────────────────────────────────────────
 export default function EmployeeTable() {
-  const { filteredEmployees, selectedDepartmentId } = useDashboard();
+  const { filteredEmployees, selectedDepartmentId, departments } = useDashboard();
   const [search, setSearch] = useState('');
   const [sortKey, setSortKey] = useState<SortKey>('id');
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc');

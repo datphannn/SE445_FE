@@ -6,7 +6,7 @@ import {
 } from 'recharts';
 import { TrendingUp, TrendingDown, Minus, AlertTriangle } from 'lucide-react';
 import { useDashboard } from '@/lib/hooks/useDashboard';
-import { getTotalVacationDays, departments } from '@/lib/data/mockData';
+import { getTotalVacationDays } from '@/lib/utils/employeeUtils';
 import FilterBar, { FilterState, defaultFilter } from './FilterBar';
 import { useFilteredEmployees } from '@/lib/hooks/useFilteredEmployees';
 
@@ -43,7 +43,7 @@ function getGroupLabel(emp: { isShareholder: boolean; sex: string; ethnicity: st
 }
 
 export default function VacationPanel() {
-  const { filteredEmployees, alertConfig } = useDashboard();
+  const { filteredEmployees, alertConfig, departments } = useDashboard();
   const [filter, setFilter] = useState<FilterState>(defaultFilter);
   const [groupBy, setGroupBy] = useState<GroupKey>('gender');
 

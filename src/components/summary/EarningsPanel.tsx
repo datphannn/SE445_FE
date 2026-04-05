@@ -6,10 +6,11 @@ import {
 } from 'recharts';
 import { TrendingUp, TrendingDown, Minus } from 'lucide-react';
 import { useDashboard } from '@/lib/hooks/useDashboard';
-import { getTotalEarnings, departments } from '@/lib/data/mockData';
+import { getTotalEarnings } from '@/lib/utils/employeeUtils';
 import FilterBar, { FilterState, defaultFilter } from './FilterBar';
 import { useFilteredEmployees } from '@/lib/hooks/useFilteredEmployees';
 
+import { Department } from '@/lib/types/employee';
 const ACCENT_COLORS = ['#2563eb', '#0ea5e9', '#06b6d4', '#10b981', '#8b5cf6', '#f59e0b'];
 
 // ── Stat tile ──────────────────────────────────────────────────
@@ -67,7 +68,7 @@ function CustomTooltip({ active, payload, label }: { active?: boolean; payload?:
 // ── Group-by helpers ───────────────────────────────────────────
 type GroupKey = 'shareholder' | 'gender' | 'ethnicity' | 'employment' | 'department';
 
-function getGroupLabel(emp: { isShareholder: boolean; sex: string; ethnicity: string; isFullTime: boolean; departmentId: string }, key: GroupKey): string {
+function getGroupLabel(emp: { isShareholder: boolean; sex: string; ethnicity: string; isFullTime: boolean; departmentId: string }, key: GroupKey, departments: Department[]): string {
   switch (key) {
     case 'shareholder': return emp.isShareholder ? 'Shareholder' : 'Non-Shareholder';
     case 'gender': return emp.sex;
@@ -78,7 +79,7 @@ function getGroupLabel(emp: { isShareholder: boolean; sex: string; ethnicity: st
 }
 
 export default function EarningsPanel() {
-  const { filteredEmployees } = useDashboard();
+  const { filteredEmployees, departments } = useDashboard();
   const [filter, setFilter] = useState<FilterState>(defaultFilter);
   const [groupBy, setGroupBy] = useState<GroupKey>('gender');
 
@@ -103,7 +104,7 @@ export default function EarningsPanel() {
   const chartData = useMemo(() => {
     const groups: Record<string, { current: number; prev: number; count: number }> = {};
     employees.forEach(emp => {
-      const key = getGroupLabel(emp, groupBy);
+      const key = getGroupLabel(emp, groupBy, departments);
       if (!groups[key]) groups[key] = { current: 0, prev: 0, count: 0 };
       groups[key].current += getTotalEarnings(emp, currentYear);
       groups[key].prev += getTotalEarnings(emp, prevYear);
