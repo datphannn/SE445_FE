@@ -1,5 +1,5 @@
 import api from "./Axios.service";
-import { mapEmployeeList } from "../../lib/mappers/Employee.mapper";
+import { mapEmployeeList } from "../lib/mappers/Employee.mapper";
 
 export const getEmployees = async () => {
     const res = await api.get("/employees");
